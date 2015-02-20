@@ -15,9 +15,9 @@ Settings
 ========
 
 
-You need to activate the Django admin in the settings and ``urls.py`` 
+You need to activate the Django admin in the settings and ``urls.py``
 depending on your needs the configuration may vary, refer
-to the Django documentation related to the 
+to the Django documentation related to the
 `admin application <https://docs.djangoproject.com/en/dev/ref/contrib/admin/>`_.
 
 Don't forget to add the application where you defined management
@@ -46,8 +46,8 @@ Then you will have to create a configuration class for the command::
 
      # ./music/admincommands.py
 
-     from admincommands.models import AdminCommand
-
+     from django import forms
+     from admincommand.models import AdminCommand
 
      class Lyrics(AdminCommand):
 
@@ -57,17 +57,17 @@ Then you will have to create a configuration class for the command::
           def get_command_arguments(self, forms_data):
               return [forms_data['title']], {}
 
-And all is well, the new admin command will be available under the 
+And all is well, the new admin command will be available under the
 «Admin Command» area of the administration of the default admin site.
 
-If you use custom admin site, don't forget to register 
+If you use custom admin site, don't forget to register
 ``admincommand.models.AdminCommand`` to the admin site object.
 
 Asynchronous tasks
 ==================
 
-If you want to execute commands asynchronously you have to 
-specify it in the AdminCommand configuration class with the 
+If you want to execute commands asynchronously you have to
+specify it in the AdminCommand configuration class with the
 ``asynchronous`` property set to ``True``::
 
      # ./music/admincommands.py
@@ -91,7 +91,7 @@ You also need to run periodically ``flush_queue`` from ``django-async`` applicat
 Permissions
 ===========
 
-You MUST add to every user or groups that should have access to the list of commands 
-«Can change admincommand» permission. Every admin command gets it's own permission 
+You MUST add to every user or groups that should have access to the list of commands
+«Can change admincommand» permission. Every admin command gets it's own permission
 «Can Run AnAdminCommand», so you can add it to proper users or group. Users will
 only see and be able to execute admin commands for which they have the permission.
