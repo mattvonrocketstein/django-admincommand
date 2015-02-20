@@ -4,14 +4,17 @@ from django.shortcuts import render
 from django.contrib.admin.options import csrf_protect_m
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect
-#from django.conf.urls.defaults import url
-from django.conf.urls import url, patterns
+try:
+    from django.conf.urls.defaults import url, patterns
+except ImportError:
+    from django.conf.urls import url, patterns
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseBadRequest
-#from django.conf.urls.defaults import patterns
 from django.utils.encoding import force_unicode
-from functools import update_wrapper
-#from django.utils.functional import update_wrapper
+try:
+    from django.utils.functional import update_wrapper
+except:
+    from functools import update_wrapper
 from django.http import HttpResponseForbidden
 from django.utils.safestring import mark_safe
 from django.contrib import messages
