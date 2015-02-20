@@ -73,7 +73,11 @@ def run_command(command_config, cleaned_data, user):
         kwargs['stdout'] = output
         call_command = lambda: management.call_command(command_config.command_name(), *args, **kwargs)
         if command_config.thread:
-            thread=threading.Thread(target=call_command)
+            # AdminCommand.thread is (undocumented) support for calling management commands
+            # from a threaded context.  This is usually a bad idea, but due to post-save signals
+            # etc it may be the only option in certain circumstances (for example, see this
+            # old ticket here https://code.djangoproject.com/ticket/8399)
+            thread = threading.Thread(target=call_command)
             thread.start()
             thread.join()
             return "(executed in a thread)\n" + output.getvalue()
