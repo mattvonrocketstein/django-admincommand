@@ -1,3 +1,4 @@
+import threading
 from StringIO import StringIO
 
 from django.conf import settings
@@ -12,7 +13,7 @@ from async import schedule
 from admincommand.models import AdminCommand
 
 
-# Cache variable to store runnable commands configuration 
+# Cache variable to store runnable commands configuration
 _command_configs = {}
 
 
@@ -70,5 +71,12 @@ def run_command(command_config, cleaned_data, user):
         # display it to the user
         output = StringIO()
         kwargs['stdout'] = output
-        management.call_command(command_config.command_name(), *args, **kwargs)
-        return output.getvalue()
+        call_command = lambda: management.call_command(command_config.command_name(), *args, **kwargs)
+        if command_config.thread:
+            thread=threading.Thread(target=call_command)
+            thread.start()
+            thread.join()
+            return "(executed in a thread)\n" + output.getvalue()
+        else:
+            call_command()
+            return output.getvalue()
