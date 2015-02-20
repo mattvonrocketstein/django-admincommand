@@ -8,8 +8,8 @@ to run Django management commands from the admin.
 Dependencies
 ============
 
- - django-async
- - django-sneak
+ - django-async (https://pypi.python.org/pypi/django-async)
+ - django-sneak (https://github.com/liberation/django-sneak)
 
 Settings
 ========
@@ -57,10 +57,10 @@ Then you will have to create a configuration class for the command::
           def get_command_arguments(self, forms_data):
               return [forms_data['title']], {}
 
-And all is well, the new admin command will be available under the
+If all is well, the new admin command will be available under the
 «Admin Command» area of the administration of the default admin site.
 
-If you use custom admin site, don't forget to register
+If you use a customized admin site (e.g. no autodiscover), then don't forget to register
 ``admincommand.models.AdminCommand`` to the admin site object.
 
 Asynchronous tasks
