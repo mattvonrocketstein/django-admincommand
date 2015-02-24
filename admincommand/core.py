@@ -72,7 +72,7 @@ def run_command(command_config, cleaned_data, user):
         output = StringIO()
         kwargs['stdout'] = output
         call_command = lambda: management.call_command(command_config.command_name(), *args, **kwargs)
-        if command_config.thread:
+        if getattr(command_config, 'thread', False):
             # AdminCommand.thread is (undocumented) support for calling management commands
             # from a threaded context.  This is usually a bad idea, but due to post-save signals
             # etc it may be the only option in certain circumstances (for example, see this
