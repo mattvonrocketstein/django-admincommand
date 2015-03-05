@@ -8,7 +8,7 @@ from django.core.management import load_command_class
 from django.utils.importlib import import_module
 from django.core.management.base import BaseCommand
 from django.contrib.auth.models import User
-from async import schedule
+from admincommand.async import schedule
 
 from admincommand.models import AdminCommand
 
