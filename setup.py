@@ -15,7 +15,7 @@ setup(
     author='Djaz Team',
     author_email='devweb@liberation.fr',
     url='https://github.com/liberation/django-admincommand',
-    packages=['admincommand'],
+    packages=['admincommand', 'admincommand.async'],
     data_files=[('admincommand/templates/admincommand', [
         'admincommand/templates/admincommand/output.html',
         'admincommand/templates/admincommand/run.html'])]
